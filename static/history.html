@@ -1,0 +1,5 @@
+<h4>History</h4>
+{% for img_desc in img_descs %}
+    <img style='width: 200px' src='data:image/png;base64,{{img_desc[0]}}'>
+    <p>{{img_desc[1]}}</p>
+{% endfor %}

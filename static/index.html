@@ -4,6 +4,7 @@
     <title>Generative FC</title>
     <script src='/static/js/main.js'></script>
     <script src='/static/js/htmx.min.js'></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
     <link rel='stylesheet' href='/static/css/main.css'>
 </head>
 <body>
@@ -24,6 +25,8 @@
                 </select>
             </form>
             <form class='form-block'>
+                <input type='hidden' id='age_mu' name='age_mu' value='14.6'>
+                <input type='hidden' id='age_sigma' name='age_sigma' value='3.4'>
                 <label for='preset'>Preset:</label>
                 <select id='preset' name='preset'>
                     <option value='8-male-ea-rest'>8 yo EA Male Resting State</option>
@@ -50,14 +53,22 @@
                     <option value='emoid'>Emotion Identification (emoid)</option>
                 </select><br>
                 <label for='number'># Averaged:</label>
-                <input type='range' min='0' max='2' step='0.2' value='0' id='number' name='number' placeholder="Number">
+                <input type='range' min='0' max='3' step='0.3' value='0' id='number' name='number' placeholder="Number">
                 <span id='number-value'>1</span><br>
                 <button id='generate' hx-post='/generate' hx-target='#img'>Generate</button>
-                <button id='generate' hx-post='/generate-var' hx-target='#img'>Generate Variance</button><br>
+                <button id='generate-var' hx-post='/generate-var' hx-target='#img'>Generate Variance</button><br>
                 <p>
                     <input type='checkbox' id='ts' name='ts' checked>Generate Timeseries<br>
                 </p>
             </form>
+            <div id='difference'>
+                <h4>Take Difference of Scans</h4>
+                <form>
+                    <label for='scan1'>Scan 1: <input type='number' id='scan1' name='scan1' min=0 max=0 value=0>
+                    <label for='scan2'>Scan 2: <input type='number' id='scan2' name='scan2' min=0 max=0 value=0>
+                    <button id='difference' hx-post='/difference' hx-target='#img'>Take Difference</button>
+                </form>
+            </div>
         </div>
         <div id='right-container'>
             <div id='img'>
@@ -82,6 +93,8 @@
                     <tr><td>13</td><td>Uncertain</td></tr>
                 </table>
             </div>
+        </div>
+        <div id='history' hx-ext='sse' sse-connect='/history' sse-swap='update'>
         </div>
     </div>
 </body>

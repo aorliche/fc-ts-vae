@@ -36,4 +36,12 @@ window.addEventListener('load', () => {
             }
         }
     });
+    let nscans = 0;
+    function scanUpdater() {
+        nscans++;
+        $('#scan1').max = nscans-1;
+        $('#scan2').max = nscans-1;
+    }
+    $('#generate').addEventListener('click', scanUpdater);
+    $('#generate-var').addEventListener('click', scanUpdater);
 });
