@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generative FC</title>
+    <script src='/static/js/main.js'></script>
+    <script src='/static/js/htmx.min.js'></script>
+    <link rel='stylesheet' href='/static/css/main.css'>
+</head>
+<body>
+    <h1>Generative FC and Timeseries</h1>
+    <p>Generate representative functional connectivity (FC) and BOLD timeseries based on demographic and phenotype data, created via VAE.</p>
+    <p><b>These FCs are not from real subjects.</b> They do not identify any particular person.</p>
+    <div id='container'>
+        <div id='left'>
+            <form class='form-block'>
+                <label for='dataset'>Model:</label>
+                <select id='dataset' name='dataset'>
+                    <option value='PNC'>Philadelphia Neurodevelopmental Cohort</option>
+                    <!--<option value='BSNIP'>Bipolar and Schizophrenia Network of Intermediate Phenotypes</option>-->
+                </select><br>
+                <label for='atlas'>Atlas:</label>
+                <select id='atlas' name='atlas'>
+                    <option value='Power264'>Power264</option>
+                </select>
+            </form>
+            <form class='form-block'>
+                <label for='preset'>Preset:</label>
+                <select id='preset' name='preset'>
+                    <option value='8-male-ea-rest'>8 yo EA Male Resting State</option>
+                    <option value='8-female-ea-rest'>8 yo EA Female Resting State</option>
+                    <option value='14-female-aa-nback'>14 yo AA Female Working Memory Task</option>
+                    <option value='22-male-aa-emoid'>22 yo AA Male Emotion Identification Task</option>
+                </select><br>
+                <label for='age'>Age:</label>
+                <input type='range' id='age' name='age' min='8' max='22' step='1' value='8'>
+                <span id='age-value'>8</span>
+                <br>
+                <label for='sex'>Sex:</label>
+                <input type='radio' name='sex' id='male' value='male' checked>Male
+                <input type='radio' name='sex' id='female' value='female'>Female<br>
+                <label for='sex'>Race:</label>
+                <select id='race' name='race'>
+                    <option value='ea'>European Ancestry</option>
+                    <option value='aa'>African Ancestry</option>
+                </select><br>
+                <label for='task'>Task:</label>
+                <select id='task' name='task'>
+                    <option value='rest'>Resting State</option>
+                    <option value='nback'>Working Memory (nback)</option>
+                    <option value='emoid'>Emotion Identification (emoid)</option>
+                </select><br>
+                <label for='number'># Averaged:</label>
+                <input type='range' min='0' max='2' step='0.2' value='0' id='number' name='number' placeholder="Number">
+                <span id='number-value'>1</span><br>
+                <button id='generate' hx-post='/generate' hx-target='#img'>Generate</button>
+                <button id='generate' hx-post='/generate-var' hx-target='#img'>Generate Variance</button><br>
+                <p>
+                    <input type='checkbox' id='ts' name='ts' checked>Generate Timeseries<br>
+                </p>
+            </form>
+        </div>
+        <div id='right-container'>
+            <div id='img'>
+                <h4>No FC generated yet.</h4>
+            </div>
+            <div id='networks'>
+                <table>
+                    <tr><td></td><td><b>Brain Functional Network</b></td></tr>
+                    <tr><td>0</td><td>Somatomotor Hand</td></tr>
+                    <tr><td>1</td><td>Somatomotor Mouth</td></tr>
+                    <tr><td>2</td><td>Cingulo-opercular</td></tr>
+                    <tr><td>3</td><td>Auditory</td></tr>
+                    <tr><td>4</td><td>Default Mode</td></tr>
+                    <tr><td>5</td><td>Memory</td></tr>
+                    <tr><td>6</td><td>Visual</td></tr>
+                    <tr><td>7</td><td>Frontoparietal</td></tr>
+                    <tr><td>8</td><td>Salience</td></tr>
+                    <tr><td>9</td><td>Subcortical</td></tr>
+                    <tr><td>10</td><td>Ventral Attention</td></tr>
+                    <tr><td>11</td><td>Dorsal Attention</td></tr>
+                    <tr><td>12</td><td>Cerebellar</td></tr>
+                    <tr><td>13</td><td>Uncertain</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+.form-block {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.form-block button {
+    margin-top: 15px;
+}
+label {
+    min-width: 80px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+select {
+    max-width: 300px;
+}
+#container, #right-container {
+    display: flex;
+    align-items: flex-start;
+}
+#left, #img {
+    margin-right: 20px;
+}
+#img {
+    min-width: 400px;
+    text-align: center;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table th, table td {
+    border: 1px solid black;
+    padding: 2px;
+    font-size: smaller;
+}
+
