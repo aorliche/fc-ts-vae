@@ -79,16 +79,21 @@ def get_fc(args, var=False):
     age = (float(args['age'])-age_mu)/age_sigma
     sex = int(args['sex'] == 'male')
     race = int(args['race'] == 'aa')
-    task = args['task']
     n = int(10**float(args['number']))
-    imgdat = gen.gen(n, age, sex, race, task, var=var)
-    bounds = [0, 30, 35, 49, 62, 120, 125, 156, 181, 199, 212, 221, 232, 236, 264]
-    img = image.imshow(imgdat, bounds=bounds)
     global clients
     my_client_idx = int(request.cookies.get('client_idx'))
     img_idx = len(clients[my_client_idx]['imgs'])
     is_var = 'var' if var else 'mean'
-    desc = f'{img_idx}. {task} {args["age"]}yo {args["sex"]} {args["race"]} [{is_var} {n} subjects]'
+    if args['dataset'] == 'pnc':
+        task = args['task']
+        imgdat = gen.gen(n, age, sex, race, task, var=var)
+        desc = f'{img_idx}. {task} {args["age"]}yo {args["sex"]} {args["race"]} [{is_var} {n} subjects]'
+    elif args['dataset'] == 'bsnip':
+        diag = int(args['diag'] == 'sz')
+        imgdat = gen.gen_bsnip(n, age, sex, race, diag, var=var)
+        desc = f'{img_idx}, {args["diag"]} {args["age"]}yo {args["sex"]} {args["race"]} [{is_var} {n} subjects]'
+    bounds = [0, 30, 35, 49, 62, 120, 125, 156, 181, 199, 212, 221, 232, 236, 264]
+    img = image.imshow(imgdat, bounds=bounds)
     clients[my_client_idx]['imgs'].append(img)
     clients[my_client_idx]['descs'].append(desc)
     clients[my_client_idx]['data'].append(imgdat)

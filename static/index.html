@@ -16,24 +16,23 @@
             <form class='form-block'>
                 <label for='dataset'>Model:</label>
                 <select id='dataset' name='dataset'>
-                    <option value='PNC'>Philadelphia Neurodevelopmental Cohort</option>
-                    <!--<option value='BSNIP'>Bipolar and Schizophrenia Network of Intermediate Phenotypes</option>-->
+                    <option value='pnc'>Philadelphia Neurodevelopmental Cohort</option>
+                    <option value='bsnip'>Bipolar and Schizophrenia Network of Intermediate Phenotypes</option>
                 </select><br>
                 <label for='atlas'>Atlas:</label>
                 <select id='atlas' name='atlas'>
                     <option value='Power264'>Power264</option>
-                </select>
-            </form>
-            <form class='form-block'>
+                </select><br>
+                <hr>
                 <input type='hidden' id='age_mu' name='age_mu' value='14.6'>
                 <input type='hidden' id='age_sigma' name='age_sigma' value='3.4'>
-                <label for='preset'>Preset:</label>
+                <!--<label for='preset'>Preset:</label>
                 <select id='preset' name='preset'>
                     <option value='8-male-ea-rest'>8 yo EA Male Resting State</option>
                     <option value='8-female-ea-rest'>8 yo EA Female Resting State</option>
                     <option value='14-female-aa-nback'>14 yo AA Female Working Memory Task</option>
                     <option value='22-male-aa-emoid'>22 yo AA Male Emotion Identification Task</option>
-                </select><br>
+                </select><br>-->
                 <label for='age'>Age:</label>
                 <input type='range' id='age' name='age' min='8' max='22' step='1' value='8'>
                 <span id='age-value'>8</span>
@@ -46,20 +45,27 @@
                     <option value='ea'>European Ancestry</option>
                     <option value='aa'>African Ancestry</option>
                 </select><br>
-                <label for='task'>Task:</label>
-                <select id='task' name='task'>
-                    <option value='rest'>Resting State</option>
-                    <option value='nback'>Working Memory (nback)</option>
-                    <option value='emoid'>Emotion Identification (emoid)</option>
-                </select><br>
+                <div id='task-div'>
+                    <label for='task'>Task:</label>
+                    <select id='task' name='task'>
+                        <option value='rest'>Resting State</option>
+                        <option value='nback'>Working Memory (nback)</option>
+                        <option value='emoid'>Emotion Identification (emoid)</option>
+                    </select><br>
+                </div>
+                <div id='diag-div' style='display: none;'>
+                    <label for'diag'>Diagnosis:</label>
+                    <select id='diag' name='diag'>
+                    </select>
+                </div>
                 <label for='number'># Averaged:</label>
                 <input type='range' min='0' max='3' step='0.3' value='0' id='number' name='number' placeholder="Number">
                 <span id='number-value'>1</span><br>
                 <button id='generate' hx-post='/generate' hx-target='#img'>Generate</button>
                 <button id='generate-var' hx-post='/generate-var' hx-target='#img'>Generate Variance</button><br>
-                <p>
+                <!--<p>
                     <input type='checkbox' id='ts' name='ts' checked>Generate Timeseries<br>
-                </p>
+                </p>-->
             </form>
             <div id='difference'>
                 <h4>Take Difference of Scans</h4>
