@@ -91,7 +91,7 @@ def get_fc(args, var=False):
     elif args['dataset'] == 'bsnip':
         diag = int(args['diag'] == 'sz')
         imgdat = gen.gen_bsnip(n, age, sex, race, diag, var=var)
-        desc = f'{img_idx}, {args["diag"]} {args["age"]}yo {args["sex"]} {args["race"]} [{is_var} {n} subjects]'
+        desc = f'{img_idx}. {args["diag"]} {args["age"]}yo {args["sex"]} {args["race"]} [{is_var} {n} subjects]'
     bounds = [0, 30, 35, 49, 62, 120, 125, 156, 181, 199, 212, 221, 232, 236, 264]
     img = image.imshow(imgdat, bounds=bounds)
     clients[my_client_idx]['imgs'].append(img)
