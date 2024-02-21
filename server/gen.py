@@ -7,7 +7,7 @@ mygen_bsnip = None
 def gen(n, age, sex, race, task='rest', var=False):
     global mygen
     if mygen is None:
-        with open('data/vae_1000_z30_cov6_264_rank5.pkl', 'rb') as f:
+        with open('data/vae_pnc_1000_z30_cov6_2.pkl', 'rb') as f:
             mygen = pickle.load(f)
     rest = int(task == 'rest')
     nback = int(task == 'nback')
@@ -30,20 +30,22 @@ def gen(n, age, sex, race, task='rest', var=False):
     w4 = mygen['dec2_w']
     b4 = np.expand_dims(mygen['dec2_b'], 0)
     x = x @ w4 + b4
-    x = x.reshape((n, 264, 5))
-    x = np.einsum('ijk,ilk->ijl', x, x)
     # Clamp non-real values
     x[x > 1] = 1
     if var:
         x = np.var(x, axis=0)
     else:
         x = np.mean(x, axis=0)
-    return x
+    a,b = np.triu_indices(264, 1)
+    X = np.zeros((264,264))
+    X[a,b] = x
+    X[b,a] = x
+    return X
 
 def gen_bsnip(n, age, sex, race, sz, var=False):
     global mygen_bsnip
     if mygen_bsnip is None:
-        with open('data/vae_bsnip_1000_z30_cov4_264_rank5.pkl', 'rb') as f:
+        with open('data/vae_bsnip_1000_z30_cov4_2.pkl', 'rb') as f:
             mygen_bsnip = pickle.load(f)
     x = np.random.normal(loc=0, scale=1/mygen_bsnip['inv_sigma'], size=(n, 30))
     y = np.concatenate([
@@ -61,13 +63,15 @@ def gen_bsnip(n, age, sex, race, sz, var=False):
     w4 = mygen_bsnip['dec2_w']
     b4 = np.expand_dims(mygen_bsnip['dec2_b'], 0)
     x = x @ w4 + b4
-    x = x.reshape((n, 264, 5))
-    x = np.einsum('ijk,ilk->ijl', x, x)
     # Clamp non-real values
     x[x > 1] = 1
     if var:
         x = np.var(x, axis=0)
     else:
         x = np.mean(x, axis=0)
-    return x
+    a,b = np.triu_indices(264, 1)
+    X = np.zeros((264,264))
+    X[a,b] = x
+    X[b,a] = x
+    return X
 
